@@ -45,7 +45,7 @@ reg delete "HKCU\Software\Policies" /f & reg delete "HKCU\Software\Microsoft\Win
 ## Metode 2: Menggunakan File Manager 7-Zip atau WinRAR (Jika Copy-Paste Windows Diblokir)
 Jika Anda tidak bisa melakukan klik kanan atau copy-paste di jendela pencarian file Windows/Steam, Anda bisa menggunakan file manager bawaan program pengarsipan (seperti **7-Zip** atau **WinRAR**) yang biasanya terpasang pada VM.
 
-1. Buka aplikasi **7-Zip File Manager** atau **WinRAR**.
+1. Buka aplikasi **7-Zip File Manager** or **WinRAR**.
    *(Jika aplikasi tersebut diblokir, salin aplikasinya ke folder lain dan ganti namanya menjadi `chrome.exe` agar bisa dibuka).*
 2. Di dalam kolom alamat atas program 7-Zip/WinRAR, ketik `C:\Windows\System32` lalu tekan Enter.
 3. Cari file **`cmd.exe`**.
@@ -148,3 +148,24 @@ Jika Anda tidak bisa mengakses sistem Windows sama sekali namun masih bisa membu
    ```
    *(Ganti huruf drive `C:` dengan `D:` jika folder tidak ditemukan).*
 6. Ketik `exit` lalu klik **Continue** untuk boot kembali ke Windows secara normal.
+
+---
+
+## 💡 Panduan Skenario: Kapan Harus Menggunakan Metode yang Mana?
+
+Untuk membantu Anda memilih metode yang paling aman dan sesuai dengan kondisi VM Anda saat ini, silakan rujuk perbandingan dan skenario berikut:
+
+### 1. Perbedaan HKCU vs HKLM (Dasar Hukum Blokir Windows)
+* **HKCU (HKEY_CURRENT_USER)**: Pengaturan khusus untuk akun Anda saat ini. **Tidak butuh hak Administrator untuk menghapusnya**. Menghapus HKCU sudah cukup untuk membuka blokir CMD dan Explorer pada sesi aktif Anda.
+* **HKLM (HKEY_LOCAL_MACHINE)**: Pengaturan global untuk seluruh sistem Windows. **Wajib butuh hak Administrator (UAC)** untuk memodifikasinya.
+
+### 2. Peta Skenario Pemulihan
+
+| Kondisi VM Anda | Metode yang Direkomendasikan | Alasan & Hasil |
+| --- | --- | --- |
+| **Hanya bisa buka Chrome & Steam, CMD terblokir, tidak punya hak Admin** | **Metode 1 (Bypass via Steam)** | Anda bisa menghapus pembatasan registry `HKCU` tanpa perlu izin administrator. Explorer akan langsung terbuka dan Anda bisa menyelamatkan file penting Anda. |
+| **Hanya bisa buka Chrome & Steam, punya hak Admin (bisa klik UAC "Yes")** | **Metode 3 Versi A (VBScript via Chrome)** | Script VBScript akan otomatis meminta elevasi hak admin (UAC) dan membersihkan baik `HKCU`, `HKLM`, maupun file kebijakan sistem di System32 secara otomatis dan instan tanpa restart. |
+| **Ingin pemulihan instan tanpa memutuskan koneksi remote VM** | **Metode 3 Versi A** atau **Perintah Satu-Baris CMD** | Hanya mematikan dan memuat ulang `explorer.exe`. Desktop/Taskbar langsung muncul kembali, koneksi remote Anda tetap aktif berjalan. |
+| **Ingin pembersihan total dan VM segar kembali** | **Metode 3 Versi B (Otomatis Restart)** | Membersihkan semua registry dan langsung memicu restart sistem agar Windows memuat ulang semua konfigurasi secara bersih dari awal. |
+| **Windows terkunci total, Steam diblokir, copy-paste mati** | **Metode 3 (VBScript via Chrome)** | VBScript dijalankan oleh `wscript.exe` yang hampir tidak pernah diblokir oleh sistem proteksi mana pun. Mengunduhnya lewat Chrome melewati batasan copy-paste. |
+| **Sistem rusak parah, Windows tidak merespon sama sekali** | **Metode 4 (Booting WinRE)** | Melakukan pemulihan dari luar sistem operasi aktif Windows melalui Web VNC Console. Dijamin 100% tembus karena sistem operasi utama sedang tidak berjalan aktif. |
