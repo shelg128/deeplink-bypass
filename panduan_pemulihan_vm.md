@@ -27,34 +27,18 @@ Metode ini memanfaatkan hak akses Steam untuk meluncurkan Command Prompt (CMD) y
 10. Masih di jendela telusuri Steam, pilih file **`chrome.exe`** (CMD samaran) yang ada di folder Downloads/Documents tersebut, lalu klik **Open** (Buka).
 11. Klik tombol **Add Selected Programs** (Tambah Program Terpilih) pada jendela Steam.
 
-### Langkah 2: Jalankan CMD dan Hapus Blokir Registry
+### Langkah 2: Jalankan CMD dan Tempel Perintah Satu-Baris
 1. Buka tab **Library** (Perpustakaan) di Steam Anda.
 2. Cari program baru bernama **`chrome`** (atau `steam` sesuai nama yang Anda berikan tadi).
 3. Klik tombol **Play** (Mainkan).
-4. Jendela Command Prompt (CMD) akan terbuka secara normal karena sistem mendeteksi nama prosesnya diizinkan.
-5. Pada jendela CMD tersebut, ketik perintah berikut secara berurutan untuk menghapus kebijakan pemblokiran di akun Anda:
-   
-   *Ketik perintah ini lalu tekan **Enter** (jika ditanya konfirmasi, ketik `Y` lalu Enter):*
-   ```cmd
-   reg delete "HKCU\Software\Policies" /f
-   ```
-   
-   *Ketik perintah ini lalu tekan **Enter** (jika ditanya konfirmasi, ketik `Y` lalu Enter):*
-   ```cmd
-   reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies" /f
-   ```
+4. Jendela Command Prompt (CMD) akan terbuka.
+5. **Salin dan Tempel (Paste)** perintah satu-baris berikut ke dalam jendela CMD, lalu tekan **Enter**:
 
-### Langkah 3: Tampilkan Kembali Desktop & Explorer
-Setelah pembatasan registri dihapus, Anda bisa memanggil kembali Desktop Windows:
-1. Di dalam jendela CMD yang sama, ketik perintah berikut lalu tekan **Enter**:
-   ```cmd
-   taskkill /F /IM explorer.exe
-   explorer.exe
-   ```
-2. Desktop, Taskbar, dan ikon Windows Anda akan muncul kembali.
-3. Sekarang Anda bisa membuka file explorer dengan normal. Buka folder:
-   `C:\Program Files (x86)\DeepLink\rent_protect`
-4. **Klik kanan** pada **`restore.bat`**, lalu pilih **Run as administrator** untuk membersihkan sisa kebijakan sistem secara permanen.
+```cmd
+reg delete "HKCU\Software\Policies" /f & reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies" /f & cd /d "C:\Program Files (x86)\DeepLink\rent_protect" & call restore.bat & taskkill /F /IM explorer.exe & start explorer.exe
+```
+
+*Perintah di atas akan secara otomatis menghapus blokir registry, masuk ke folder DeepLink, menyalin kebijakan pemulihan, mematikan explorer yang terkunci, dan langsung memunculkan kembali Taskbar/Desktop Anda.*
 
 ---
 
@@ -70,7 +54,7 @@ Jika Anda tidak bisa melakukan klik kanan atau copy-paste di jendela pencarian f
 6. Tekan tombol **Ctrl + V** untuk menempelkan file `cmd.exe`.
 7. Klik kanan file hasil paste tersebut di dalam 7-Zip/WinRAR (atau tekan tombol **F2**), lalu ganti namanya menjadi **`chrome.exe`** atau **`steam.exe`**.
 8. Klik dua kali file `chrome.exe` (CMD samaran) tersebut **langsung dari dalam program 7-Zip/WinRAR** untuk menjalankannya.
-9. Setelah CMD terbuka, lanjutkan ke **Langkah 2 di Metode 1** untuk menghapus registry pemblokiran.
+9. Setelah CMD terbuka, tempelkan perintah satu-baris yang sama pada **Metode 1 Langkah 2** di atas.
 
 ---
 
@@ -114,7 +98,7 @@ document.body.removeChild(a);
 ```
 4. Chrome akan mengunduh file bernama **`restore_explorer.vbs`**. Double-click file tersebut di folder Downloads, lalu pilih **Yes** pada UAC. Desktop akan langsung muncul kembali!
 
-### Versi B: Otomatis Restart VM (Skat Bersih)
+### Versi B: Otomatis Restart VM (Sangat Bersih)
 Script ini akan membersihkan proteksi dan **langsung memaksa VM melakukan restart/reboot** dalam 0 detik untuk memastikan seluruh kebijakan bersih dimuat kembali secara sempurna.
 
 1. Buka **Google Chrome** di VM Anda.
