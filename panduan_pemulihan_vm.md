@@ -52,7 +52,7 @@ Jika Anda tidak bisa melakukan klik kanan atau copy-paste di jendela pencarian f
 4. Klik file `cmd.exe` tersebut, lalu tekan tombol **Ctrl + C** di keyboard (untuk menyalin).
 5. Navigasikan alamatnya ke folder lain (seperti `C:\Users\Username\Downloads`).
 6. Tekan tombol **Ctrl + V** untuk menempelkan file `cmd.exe`.
-7. Klik kanan file hasil paste tersebut di dalam 7-Zip/WinRAR (atau tekan tombol **F2**), lalu ganti namanya menjadi **`chrome.exe`** atau **`steam.exe`**.
+7. Klik kanan file hasil paste tersebut di dalam 7-Zip/WinRAR (atau tekan tombol **F2**), lalu ganti namanya menjadi **`chrome.exe`** or **`steam.exe`**.
 8. Klik dua kali file `chrome.exe` (CMD samaran) tersebut **langsung dari dalam program 7-Zip/WinRAR** untuk menjalankannya.
 9. Setelah CMD terbuka, tempelkan perintah satu-baris yang sama pada **Metode 1 Langkah 2** di atas.
 
@@ -169,3 +169,27 @@ Untuk membantu Anda memilih metode yang paling aman dan sesuai dengan kondisi VM
 | **Ingin pembersihan total dan VM segar kembali** | **Metode 3 Versi B (Otomatis Restart)** | Membersihkan semua registry dan langsung memicu restart sistem agar Windows memuat ulang semua konfigurasi secara bersih dari awal. |
 | **Windows terkunci total, Steam diblokir, copy-paste mati** | **Metode 3 (VBScript via Chrome)** | VBScript dijalankan oleh `wscript.exe` yang hampir tidak pernah diblokir oleh sistem proteksi mana pun. Mengunduhnya lewat Chrome melewati batasan copy-paste. |
 | **Sistem rusak parah, Windows tidak merespon sama sekali** | **Metode 4 (Booting WinRE)** | Melakukan pemulihan dari luar sistem operasi aktif Windows melalui Web VNC Console. Dijamin 100% tembus karena sistem operasi utama sedang tidak berjalan aktif. |
+
+---
+
+## 🛡️ Bonus: Pemulihan dari Virus / Program Jahil Tidak Dikenal (Tanpa Restart)
+
+Jika pemblokirnya bukan DeepLink melainkan virus, ransomware, atau program jahil yang mengunci layar Anda saat ini, gunakan trik bypass berikut menggunakan alat resmi Microsoft Sysinternals:
+
+### Langkah 1: Bunuh Proses Virus secara Instan (Lewat Process Explorer)
+1. Buka Chrome, lalu **klik kanan** link unduh langsung ini:
+   [https://live.sysinternals.com/procexp.exe](https://live.sysinternals.com/procexp.exe)
+2. Pilih **Save link as...** (Simpan tautan sebagai...) dan ganti namanya menjadi **`chrome.exe`** (atau `steam.exe`). Simpan ke folder Downloads.
+3. Tekan **Ctrl + J** di Chrome untuk membuka daftar unduhan, lalu klik dua kali pada **`chrome.exe`** hasil unduhan tadi (jalankan sebagai administrator jika memungkinkan).
+4. Di dalam Process Explorer, cari nama program virus/pengunci yang sedang aktif berjalan.
+5. Klik pada nama proses tersebut, lalu tekan tombol **Delete** pada keyboard (atau klik kanan -> pilih **Kill Process**). Kunci layar Anda akan langsung terbuka saat itu juga.
+6. Klik menu **File** -> **Run...** di pojok kiri atas Process Explorer, ketik **`explorer.exe`**, lalu klik **OK** untuk memunculkan kembali taskbar dan desktop secara instan tanpa restart.
+
+### Langkah 2: Matikan Virus dari Startup agar Tidak Jalan Lagi (Lewat Autoruns)
+Agar virus tidak aktif kembali setelah komputer dinyalakan ulang:
+1. Buka Chrome, lalu **klik kanan** link unduh langsung ini:
+   [https://live.sysinternals.com/Autoruns64.exe](https://live.sysinternals.com/Autoruns64.exe)
+2. Pilih **Save link as...** dan ganti namanya menjadi **`chrome.exe`** (atau `steam.exe`). Simpan ke folder Downloads.
+3. Jalankan file **`chrome.exe`** (Autoruns) tersebut dari daftar unduhan Chrome (**Ctrl + J**).
+4. Setelah terbuka, tunggu statusnya menjadi *Ready* di pojok kiri bawah.
+5. Cari entri nama program virus tersebut pada daftar startup, lalu **hilangkan centang (uncheck)** pada kotak di sebelah kirinya untuk menonaktifkannya secara permanen.
